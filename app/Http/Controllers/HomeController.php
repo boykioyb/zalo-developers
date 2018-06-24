@@ -38,6 +38,13 @@ class HomeController extends Controller
         $helper = $this->zalo->getRedirectLoginHelper();
         $callBackUrl = $this->baseUrl . "webhook";
         $loginUrl = $helper->getLoginUrl($callBackUrl); // This is login url
+        $oauthCode = isset($_GET['code']) ? $_GET['code'] : "THIS NOT CALLBACK PAGE !!!"; // get oauthoauth code from url params
+        $accessToken = $helper->getAccessToken($callBackUrl); // get access token
+        if ($accessToken != null) {
+            $expires = $accessToken->getExpiresAt(); // get expires time
+        }
+        dd($expires);
+        die;
         return Redirect::to($loginUrl);
     }
 
